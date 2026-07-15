@@ -1,0 +1,34 @@
+#include <string.h>
+#include <stdbool.h>
+int countPalindrom(char* s) {
+    int n = strlen(s);
+    int first[26], last[26];
+    for (int i = 0; i < 26; i++) {
+        first[i] = -1;
+        last[i] = -1;
+    }
+    for (int i = 0; i < n; i++) {
+        int curr = s[i] - 'a';
+        if (first[curr] == -1) {
+            first[curr] = i;
+        }
+        last[curr] = i;
+    }
+    int totalUnique = 0;
+    for (int i = 0; i < 26; i++) {
+        if (first[i] != -1 && last[i] > first[i] + 1) {
+            bool between[26] = {false};
+            int count = 0;
+            
+            for (int j = first[i] + 1; j < last[i]; j++) {
+                int midChar = s[j] - 'a';
+                if (!between[midChar]) {
+                    between[midChar] = true;
+                    count++;
+                }
+            }
+            totalUnique += count;
+        }
+    }
+    return totalUnique;
+}
