@@ -1,0 +1,18 @@
+#include <string.h>
+#include <stdbool.h>
+
+bool hasMatch(char* s, char* p) {
+    char* star = strchr(p, '*');
+    *star = '\0';
+    char* prefix = p;
+    char* suffix = star + 1;
+    char* firstMatch = strstr(s, prefix);
+    bool found = false;
+    if (firstMatch != NULL) {
+        if (strstr(firstMatch + strlen(prefix), suffix) != NULL) {
+            found = true;
+        }
+    }
+    *star = '*';
+    return found;
+}
