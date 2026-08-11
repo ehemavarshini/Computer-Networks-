@@ -1,0 +1,40 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+
+    // The optimized logic using bitwise XOR
+    public static int findLonely(List<Integer> arr) {
+        int uniqueElement = 0;
+        for (int num : arr) {
+            uniqueElement ^= num; // XOR cancels out paired elements
+        }
+        return uniqueElement;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Check if there is an integer to read
+        if (!scanner.hasNextInt()) {
+            return;
+        }
+        
+        int n = scanner.nextInt();
+        List<Integer> arr = new ArrayList<>(n);
+
+        // Read the space-separated elements
+        for (int i = 0; i < n; i++) {
+            if (scanner.hasNextInt()) {
+                arr.add(scanner.nextInt());
+            }
+        }
+
+        // Call the static method and print the result
+        int res = findLonely(arr);
+        System.out.println(res);
+
+        scanner.close();
+    }
+}
