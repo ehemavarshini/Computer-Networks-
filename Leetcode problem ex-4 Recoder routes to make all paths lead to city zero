@@ -1,0 +1,33 @@
+import java.util.*;
+class Solution {
+    public int minReorder(int n, int[][] connections) {
+        List<List<int[]>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for (int[] conn : connections) {
+            int u = conn[0];
+            int v = conn[1];
+            adj.get(u).add(new int[]{v, 1});
+            adj.get(v).add(new int[]{u, 0});
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[n];
+        queue.offer(0);
+        visited[0] = true;
+        int edgeChanges = 0;
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            for (int[] neighbor : adj.get(current)) {
+                int nextNode = neighbor[0];
+                int isOriginalDirection = neighbor[1];
+                if (!visited[nextNode]) {
+                    visited[nextNode] = true;
+                    edgeChanges += isOriginalDirection;
+                    queue.offer(nextNode);
+                }
+            }
+        }
+        return edgeChanges;
+    }
+}
